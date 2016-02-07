@@ -35,6 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                             && sudo apt-get install python-pip curl git -y \
                             && sudo pip install paramiko PyYAML Jinja2 \
                                                 httplib2 six pytest \
+                                                ansible-lint \
                             && cd /usr/local/src \
                             && sudo git clone #{ANSIBLE_GIT_REPOSITORY} \
                             && cd ansible \
@@ -47,7 +48,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                         || (sudo apt-get update \
                             && sudo apt-get install python-pip curl git -y \
                             && sudo pip install paramiko PyYAML Jinja2 \
-                                                httplib2 six pytest ansible)"
+                                                httplib2 six pytest ansible \
+                                                ansible-lint)"
         end
       end
 
@@ -70,6 +72,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           ENV['ANSIBLE_ROLE_NAME'] = File.basename(Dir.getwd)
           puts ENV['ANSIBLE_ROLE_NAME']
         end
+      end
+
+      # Run linter on role
+      vm_config.vm.provision "shell" do |sh|
+        sh.inline = "cd /vagrant && ansible-lint tasks/main.yml"
+        sh.privileged = false
       end
 
       # Run Ansible provisioning

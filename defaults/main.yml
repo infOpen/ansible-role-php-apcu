@@ -2,3 +2,6 @@
 
 # Defaults vars file for php-apcu role
 
+php_apcu_use_backports: False
+php_apcu_package_state: 'latest'
+

@@ -1,0 +1,7 @@
+---
+
+# Ubuntu distribution vars
+
+php_apcu_packages:
+  - php5-apcu
+
