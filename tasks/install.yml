@@ -1,0 +1,13 @@
+---
+
+- name: Run pre-install tasks
+  include: "{{ role_path ~ '/tasks/'
+                ~ 'pre_install_' ~ (ansible_distribution | lower) ~ '.yml' }}"
+
+- name: Install packages
+  become: True
+  package:
+    name: "{{ item }}"
+    state: "{{ php_apcu_package_state }}"
+  with_items: "{{ php_apcu_packages }}"
+

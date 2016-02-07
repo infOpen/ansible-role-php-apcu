@@ -1,0 +1,11 @@
+---
+
+- name: Configure backport repository
+  become: True
+  apt_repository:
+    repo: >
+      deb http://de.archive.ubuntu.com/ubuntu/
+      {{ ansible_distribution_release}}-backports
+      main restricted universe multiverse
+  when: php_apcu_use_backports
+

@@ -2,3 +2,16 @@
 
 # Main tasks file for php-apcu role
 
+- name: Load the OS specific varibles
+  include_vars: "{{ role_path }}/vars/{{ ansible_distribution | lower }}.yml"
+  tags:
+    - install
+    - php_apcu
+
+
+- name: Run install tasks
+  include: "{{ role_path }}/tasks/install.yml"
+  tags:
+    - install
+    - php_apcu
+
